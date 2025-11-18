@@ -20,7 +20,7 @@ Platform.shim.eval = async (data: Types.BuildScriptResult, env: Record<string, T
 const args = process.argv.slice(2)
 if (!args) {
 console.error("Need one argument: player_version");
-exit(1);
+process.exit(1);
 };
 const player_id = args[0];
 const innertube = await Innertube.create({'client': 'TV', 'lang': 'en', 'player_id': player_id})
