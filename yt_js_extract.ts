@@ -1,4 +1,4 @@
-import { Innertube, Platform } from 'youtubei.js/web'
+import { Innertube, Platform, Types } from 'youtubei.js'
 
 let sig_code;
 Platform.shim.eval = async (data: Types.BuildScriptResult, env: Record<string, Types.VMPrimative>) => {
@@ -17,13 +17,16 @@ Platform.shim.eval = async (data: Types.BuildScriptResult, env: Record<string, T
   sig_code = data;
   return new Function(code)();
 }
+let innertube
+let player_id
 const args = process.argv.slice(2)
-if (!args) {
-console.error("Need one argument: player_version");
-process.exit(1);
+if (args.length === 0) {
+innertube = await Innertube.create({'client': 'TV', 'lang': 'en'})
+player_id = innertube.session.player.player_id
+} else {
+player_id = args[0];
+innertube = await Innertube.create({'client': 'TV', 'lang': 'en', 'player_id': player_id})
 };
-const player_id = args[0];
-const innertube = await Innertube.create({'client': 'TV', 'lang': 'en', 'player_id': player_id})
 var video_id = 'jNQXAC9IVRw'
 var info = await innertube.getStreamingData(video_id, '')
 sig_code.player_id = player_id;
