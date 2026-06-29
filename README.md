@@ -14,7 +14,7 @@ Clone the repository and install the required packages.
 git clone https://github.com/alive4ever/yt-js-extractor
 cd yt-js-extractor
 # Use npm with nodejs to install dependencies
-npm install
+npm install --ignore-scripts
 # Use the main js executable for deno and bun
 # deno install
 # bun install
