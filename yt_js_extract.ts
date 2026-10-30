@@ -11,7 +11,7 @@ player_id = args[0];
 innertube = await Innertube.create({'client': 'WEB', 'lang': 'en', 'player_id': player_id})
 };
 const sig_code = innertube.session.player.data
-const process_fn = `function process(n = "", sp = "", s = "") {
+const process_fn = `function decrypt_signatures(n = "", sp = "", s = "") {
   const mockStreamingURL = "https://ytjs.googlevideo.com/videoplayback?expire=1234567890&"+"n="+encodeURIComponent(n);
   const urlCtorFunction = exportedVars.nsigFunction || (() => { throw new Error('No n/sig decipher function extracted') });
   const urlCtor = urlCtorFunction(mockStreamingURL, sp, s);
@@ -38,7 +38,7 @@ const process_fn = `function process(n = "", sp = "", s = "") {
 }`
 
 sig_code.output = `${sig_code.output}\n${process_fn}`
-sig_code.nsig_function = 'process'
+sig_code.nsig_function = 'decrypt_signatures'
 sig_code.nsig_function_args = 'n, sp, sig'
 sig_code.player_id = player_id;
 console.log(JSON.stringify(sig_code));
